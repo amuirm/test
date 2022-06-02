@@ -1,0 +1,48 @@
+#include<stdio.h>															//행맨 게임
+#include<stdlib.h>
+#include<time.h>
+#include<string.h>
+int main()
+{
+	char* dic[9] = { "dog", "lion", "fox", "horse", "tiger", "raccoon", "bear", "dolphin", "elephant" }; // 동물로 행맨 게임
+	srand(time(NULL));
+	int rd = rand() % sizeof(dic) / sizeof(dic[0]);
+	char* word = dic[rd];
+	int len = strlen(word);
+	char* pword;
+	pword = (char*)malloc(len + 1); // 동적 메모리 할당 (일시적으로 많은 데이터를 써야 할때)
+	int count = 0;
+	for (int i = 0; i < len; i++)
+	{
+		pword[i] = '_';
+	}
+	pword[len] = '\0';
+	//printf("%s 크기 : %d", pword, _msize(pword));
+	printf("<< 행맨 게임 만들기 >>\n");
+	for (;;)
+	{
+		char alphabet;
+		printf("\n현재 문자 출력 : %s\n", pword);
+		printf("문자 한 개 입력 : ");
+		scanf("%c", &alphabet);
+		rewind(stdin); 
+		count++; // 틀린 개수 확인
+		for (int j = 0; j < _msize(pword); j++)
+		{
+			if (pword[j] == '_') 
+			{
+				if (word[j] == alphabet)
+				{
+					pword[j] = alphabet;
+					len--;
+				}
+			}
+		}
+		if (len == 0)
+		{
+			break;
+		}
+	}
+	printf("%d번만에 성공!", count);
+	free(pword); // 동적 메모리 할당 해제
+}              // 하는 이유 : 동적 메모리 할당은 사용 후에 사용자가 메모리를 해방(free) 시켜야 한다.
