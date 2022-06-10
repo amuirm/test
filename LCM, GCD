@@ -1,0 +1,31 @@
+#include<stdio.h>
+void get_gcd_lcm(int x, int y, int* gcd, int* lcm)
+{
+	int x1 = x, y1 = y;
+	int temp;
+	if (x < y)
+	{
+		temp = x;
+		x = y;
+		y = temp;
+	}
+	while (y != 0)
+	{
+		temp = y;
+		y = x % y;
+		x = temp;
+		*gcd = temp;
+	}
+	*lcm = x1 * y1 / *gcd;
+		printf("최소공배수는 %d입니다.\n", *lcm);
+		printf("최대공약수는 %d입니다.", *gcd);
+
+}
+int main()
+{
+	int x, y;
+	int gcd = 0 , lcm = 0;
+	printf("두개의 정수를 입력하시오: ");
+	scanf("%d %d", &x, &y);
+	get_gcd_lcm(x, y, &gcd, &lcm);
+}
